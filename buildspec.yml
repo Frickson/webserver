@@ -8,8 +8,7 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "$CODEBUILD_SOURCE_VERSION_GITHUB"
-      - echo "CODEBUILD_START_TIME"
+      - echo "$CODEBUILD_START_TIME"
       - echo "Logging in to Docker Hub"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   build:
