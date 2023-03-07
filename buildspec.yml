@@ -4,7 +4,7 @@ env:
   parameter-store:
     DOCKER_PASSWORD: "DOCKER_PASSWORD"
     DOCKER_USERNAME: "DOCKER_USERNAME"
-    version: "/build-version/chatbot"
+    VERSION: "/build-version/chatbot"
 phases:
   pre_build:
     commands:
@@ -18,5 +18,5 @@ phases:
   post_build:
     commands:
       - echo "Pushing Docker image to Docker Hub"
-      - docker tag my-image "$DOCKER_USERNAME/my-image:$version"
-      - docker push "$DOCKER_USERNAME/my-image:$version"
+      - docker tag my-image "$DOCKER_USERNAME/my-image:$VERSION"
+      - docker push "$DOCKER_USERNAME/my-image:$VERSION"
