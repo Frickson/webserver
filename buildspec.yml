@@ -4,9 +4,11 @@ env:
   parameter-store:
     DOCKER_PASSWORD: "DOCKER_PASSWORD"
     DOCKER_USERNAME: "DOCKER_USERNAME"
+    version: "/build-version/chatbot"
 phases:
   pre_build:
     commands:
+      - echo "$CODEBUILD_SOURCE_VERSION"
       - echo "Logging in to Docker Hub"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   build:
@@ -16,5 +18,5 @@ phases:
   post_build:
     commands:
       - echo "Pushing Docker image to Docker Hub"
-      - docker tag my-image "$DOCKER_USERNAME/my-image:latest"
-      - docker push "$DOCKER_USERNAME/my-image:latest"
+      - docker tag my-image "$DOCKER_USERNAME/my-image:$version"
+      - docker push "$DOCKER_USERNAME/my-image:$version"
