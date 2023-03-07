@@ -17,6 +17,7 @@ phases:
       - docker build -t my-image .
   post_build:
     commands:
+      - echo "$VERSION"
       - echo "Pushing Docker image to Docker Hub"
       - docker tag my-image "$DOCKER_USERNAME/my-image:$VERSION"
       - docker push "$DOCKER_USERNAME/my-image:$VERSION"
