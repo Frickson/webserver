@@ -4,11 +4,12 @@ env:
   parameter-store:
     DOCKER_PASSWORD: "DOCKER_PASSWORD"
     DOCKER_USERNAME: "DOCKER_USERNAME"
-    VERSION: "/build-version/chatbot"
+    VERSION: "build-version-chatbot"
 phases:
   pre_build:
     commands:
-      - echo "$CODEBUILD_SOURCE_VERSION"
+      - echo "$CODEBUILD_SOURCE_VERSION_GITHUB"
+      - echo "CODEBUILD_START_TIME"
       - echo "Logging in to Docker Hub"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   build:
