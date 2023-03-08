@@ -11,6 +11,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
+      - echo "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}"
       - docker tag my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}
   post_build:
     commands:
@@ -19,6 +20,5 @@ phases:
       - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - echo Writing image definitions file...
       - printf '[{"name":"my-image","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} > imageDetail.json
-artifacts:
-  files:
-    - imageDetail.json
+
+
