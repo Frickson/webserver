@@ -1,25 +1,24 @@
 version: 0.2
 
-env:
-  parameter-store:
-    DOCKER_PASSWORD: "DOCKER_PASSWORD"
-    DOCKER_USERNAME: "DOCKER_USERNAME"
-    VERSION: "build-version-chatbot"
 phases:
   pre_build:
     commands:
-    # havent try this
-      - echo "CODEBUILD_RESOLVED_SOURCE_VERSION"
-      - echo "$CODEBUILD_START_TIME"
-      - echo "Logging in to Docker Hub"
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION})
   build:
     commands:
-      - echo "Building Docker image"
-      - docker build -t my-image .
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
+      - docker tag my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}
   post_build:
     commands:
-      - echo "$VERSION"
-      - echo "Pushing Docker image to Docker Hub"
-      - docker tag my-image "$DOCKER_USERNAME/my-image:$VERSION"
-      - docker push "$DOCKER_USERNAME/my-image:$VERSION"
+      - echo Build completed on `date`
+      - echo Pushing the Docker image to ECR...
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo Writing image definitions file...
+      - printf '[{"name":"my-image","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} > imageDetail.json
+artifacts:
+  files:
+    - imageDetail.json
