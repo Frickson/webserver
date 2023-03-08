@@ -1,5 +1,8 @@
 version: 0.2
 
+env:
+  parameter-store:
+    AWS_ACCOUNT_ID: "AWS_ACCOUNT_ID"
 phases:
   pre_build:
     commands:
