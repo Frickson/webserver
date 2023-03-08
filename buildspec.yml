@@ -24,8 +24,8 @@ phases:
       - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - echo Writing image definitions file...
       - printf '[{"name":"my-image","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:${CODEBUILD_RESOLVED_SOURCE_VERSION} > imageDetail.json
-  artifacts:
-    files:
-      - imageDetail.json
+artifacts:
+  files:
+    - imageDetail.json
 
 
