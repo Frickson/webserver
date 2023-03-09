@@ -1,1 +1,2 @@
 password=dsajsadadsad12345678
+AWS_SECRET_ACCESS_KEY = *********
