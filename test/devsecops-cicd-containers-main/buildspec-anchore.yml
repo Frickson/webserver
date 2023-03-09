@@ -1,6 +1,10 @@
 #  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #  SPDX-License-Identifier: MIT-0
 version: 0.2
+
+env:
+  parameter-store:
+    IMAGE_REPO_NAME: "IMAGE_REPO_NAME"
 phases:
   install:
     commands:
