@@ -7,14 +7,11 @@ phases:
       - echo "in the install phase"
       - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
       - chmod +x ./kubectl
-      - apt-get update && apt-get -y install jq --upgrade awscli
     finally:
       - echo This always runs even if the login command fails    
   pre_build:
     commands:
-      - echo "inside pre_build stage"
-      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - docker version
       - echo "stage pre_build completed"
   build:
     commands:
