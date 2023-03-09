@@ -2,14 +2,14 @@
 #  SPDX-License-Identifier: MIT-0
 version: 0.2
 phases:
-  install:
-    commands:
-      - echo "in the install phase"
-      - curl -sS -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl
-      - chmod +x ./kubectl
-      - apt-get update && apt-get -y install jq --upgrade awscli
-    finally:
-      - echo This always runs even if the login command fails    
+  # install:
+  #   commands:
+  #     - echo "in the install phase"
+  #     - curl -sS -o kubectl curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
+  #     - chmod +x ./kubectl
+  #     - apt-get update && apt-get -y install jq --upgrade awscli
+  #   finally:
+  #     - echo This always runs even if the login command fails    
   pre_build:
     commands:
       - echo "inside pre_build stage"
@@ -20,7 +20,7 @@ phases:
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
-      - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile-wp.dockerfile
+      - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f Dockerfile
       - curl -s https://ci-tools.anchore.io/inline_scan-v0.6.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $REPOSITORY_URI:latest
