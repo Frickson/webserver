@@ -5,6 +5,8 @@ version: 0.2
 env:
   parameter-store:
     IMAGE_REPO_NAME: "IMAGE_REPO_NAME"
+    DOCKER_PASSWORD: "DOCKER_PASSWORD"
+    DOCKER_USERNAME: "DOCKER_USERNAME"
 phases:
   install:
     commands:
@@ -15,6 +17,8 @@ phases:
       - echo This always runs even if the login command fails    
   pre_build:
     commands:
+      - echo "Logging in to Docker Hub"
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker version
       - echo "stage pre_build completed"
   build:
@@ -22,7 +26,7 @@ phases:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - curl -s https://ci-tools.anchore.io/inline_scan-v0.6.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - curl -s https://ci-tools.anchore.io/inline_scan-v0.10.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $REPOSITORY_URI:latest
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
