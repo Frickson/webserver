@@ -35,27 +35,25 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   post_build:
     commands:
-      - echo "nothing"
-      # - tail -5 snyk-results.json
-      # - |
-      #   jq "{ \"messageType\": \"CodeScanReport\", \"reportType\": \"SNYK\", \
-      #   \"createdAt\": $(date +\"%Y-%m-%dT%H:%M:%S.%3NZ\"), \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \
-      #   \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \
-      #   \"build_id\": env.CODEBUILD_BUILD_ID, \
-      #   \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
-      #   \"report\": . }" snyk-results.json > payload.json
-      # - echo ""
-      # - |
-      #   if (grep -E 'high|critical' payload.json); then 
-      #     aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
-      #     echo "There are critical or high vulnerabilities.. failing the build"
-      #     docker push $REPOSITORY_URI:latest
-      #     exit 1;
-      #   elif (grep -E 'medium|low' payload.json); then
-      #     aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
-      #     docker push $REPOSITORY_URI:latest
-      #   fi
-      # - printf '[{"name":"hello-k8s","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
+      - |
+        jq "{ \"messageType\": \"CodeScanReport\", \"reportType\": \"SNYK\", \
+        \"createdAt\": $(date +\"%Y-%m-%dT%H:%M:%S.%3NZ\"), \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \
+        \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \
+        \"build_id\": env.CODEBUILD_BUILD_ID, \
+        \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
+        \"report\": . }" snyk-results.json > payload.json
+      - echo ""
+      - |
+        if (grep -E 'high|critical' payload.json); then 
+          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
+          echo "There are critical or high vulnerabilities.. failing the build"
+          docker push $REPOSITORY_URI:latest
+          exit 1;
+        elif (grep -E 'medium|low' payload.json); then
+          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
+          docker push $REPOSITORY_URI:latest
+        fi
+      - printf '[{"name":"hello-k8s","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
 artifacts:
   type: zip
   files: '**/*'
