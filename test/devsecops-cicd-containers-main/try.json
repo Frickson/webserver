@@ -1,0 +1,258 @@
+{
+    "vulnerabilities": [],
+    "ok": true,
+    "dependencyCount": 107,
+    "org": "***",
+    "policy": "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.\nversion: v1.25.0\nignore: {}\npatch: {}\n",
+    "isPrivate": true,
+    "licensesPolicy": {
+      "severities": {},
+      "orgLicenseRules": {
+        "AGPL-1.0": {
+          "licenseType": "AGPL-1.0",
+          "severity": "high",
+          "instructions": ""
+        },
+        "AGPL-3.0": {
+          "licenseType": "AGPL-3.0",
+          "severity": "high",
+          "instructions": ""
+        },
+        "Artistic-1.0": {
+          "licenseType": "Artistic-1.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "Artistic-2.0": {
+          "licenseType": "Artistic-2.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "CDDL-1.0": {
+          "licenseType": "CDDL-1.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "CPOL-1.02": {
+          "licenseType": "CPOL-1.02",
+          "severity": "high",
+          "instructions": ""
+        },
+        "EPL-1.0": {
+          "licenseType": "EPL-1.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "GPL-2.0": {
+          "licenseType": "GPL-2.0",
+          "severity": "high",
+          "instructions": ""
+        },
+        "GPL-3.0": {
+          "licenseType": "GPL-3.0",
+          "severity": "high",
+          "instructions": ""
+        },
+        "LGPL-2.0": {
+          "licenseType": "LGPL-2.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "LGPL-2.1": {
+          "licenseType": "LGPL-2.1",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "LGPL-3.0": {
+          "licenseType": "LGPL-3.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "MPL-1.1": {
+          "licenseType": "MPL-1.1",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "MPL-2.0": {
+          "licenseType": "MPL-2.0",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "MS-RL": {
+          "licenseType": "MS-RL",
+          "severity": "medium",
+          "instructions": ""
+        },
+        "SimPL-2.0": {
+          "licenseType": "SimPL-2.0",
+          "severity": "high",
+          "instructions": ""
+        }
+      }
+    },
+    "packageManager": "deb",
+    "ignoreSettings": {
+      "adminOnly": false,
+      "reasonRequired": false,
+      "disregardFilesystemIgnores": false
+    },
+    "docker": {
+      "baseImage": "nginx:1.12.1",
+      "baseImageRemediation": {
+        "code": "REMEDIATION_AVAILABLE",
+        "advice": [
+          {
+            "message": "Base Image    Vulnerabilities  Severity\nnginx:1.12.1  320              41 critical, 77 high, 73 medium, 129 low\n"
+          },
+          {
+            "message": "Recommendations for base image upgrade:\n",
+            "bold": true
+          },
+          {
+            "message": "Minor upgrades",
+            "bold": true
+          },
+          {
+            "message": "Base Image    Vulnerabilities  Severity\nnginx:1.22.1  79               1 critical, 2 high, 1 medium, 75 low\n"
+          },
+          {
+            "message": "Alternative image types",
+            "bold": true
+          },
+          {
+            "message": "Base Image       Vulnerabilities  Severity\nnginx:1.22-perl  79               1 critical, 2 high, 1 medium, 75 low\n"
+          },
+          {
+            "message": "Debian 9 is no longer supported by the Debian maintainers. Vulnerability detection may be affected by a lack of security updates.",
+            "bold": true,
+            "color": "yellow"
+          }
+        ]
+      }
+    },
+    "summary": "No known operating system vulnerabilities",
+    "severityThreshold": "high",
+    "filesystemPolicy": false,
+    "filtered": {
+      "ignore": [],
+      "patch": []
+    },
+    "uniqueCount": 0,
+    "targetFile": "Dockerfile",
+    "projectName": "docker-image|***",
+    "displayTargetFile": "Dockerfile",
+    "platform": "linux/amd64",
+    "hasUnknownVersions": false,
+    "path": "***:443aa86cda2d0181cd687f665727b700eebdb0ff",
+    "applications": [
+      {
+        "vulnerabilities": [],
+        "ok": true,
+        "dependencyCount": 0,
+        "org": "***",
+        "policy": "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.\nversion: v1.25.0\nignore: {}\npatch: {}\n",
+        "isPrivate": true,
+        "licensesPolicy": {
+          "severities": {},
+          "orgLicenseRules": {
+            "AGPL-1.0": {
+              "licenseType": "AGPL-1.0",
+              "severity": "high",
+              "instructions": ""
+            },
+            "AGPL-3.0": {
+              "licenseType": "AGPL-3.0",
+              "severity": "high",
+              "instructions": ""
+            },
+            "Artistic-1.0": {
+              "licenseType": "Artistic-1.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "Artistic-2.0": {
+              "licenseType": "Artistic-2.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "CDDL-1.0": {
+              "licenseType": "CDDL-1.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "CPOL-1.02": {
+              "licenseType": "CPOL-1.02",
+              "severity": "high",
+              "instructions": ""
+            },
+            "EPL-1.0": {
+              "licenseType": "EPL-1.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "GPL-2.0": {
+              "licenseType": "GPL-2.0",
+              "severity": "high",
+              "instructions": ""
+            },
+            "GPL-3.0": {
+              "licenseType": "GPL-3.0",
+              "severity": "high",
+              "instructions": ""
+            },
+            "LGPL-2.0": {
+              "licenseType": "LGPL-2.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "LGPL-2.1": {
+              "licenseType": "LGPL-2.1",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "LGPL-3.0": {
+              "licenseType": "LGPL-3.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "MPL-1.1": {
+              "licenseType": "MPL-1.1",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "MPL-2.0": {
+              "licenseType": "MPL-2.0",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "MS-RL": {
+              "licenseType": "MS-RL",
+              "severity": "medium",
+              "instructions": ""
+            },
+            "SimPL-2.0": {
+              "licenseType": "SimPL-2.0",
+              "severity": "high",
+              "instructions": ""
+            }
+          }
+        },
+        "packageManager": "maven",
+        "ignoreSettings": {
+          "adminOnly": false,
+          "reasonRequired": false,
+          "disregardFilesystemIgnores": false
+        },
+        "docker": {},
+        "summary": "No high or critical severity vulnerabilities",
+        "severityThreshold": "high",
+        "filesystemPolicy": false,
+        "uniqueCount": 0,
+        "targetFile": "/usr/share/java",
+        "projectName": "***:443aa86cda2d0181cd687f665727b700eebdb0ff:/usr/share/java",
+        "displayTargetFile": "/usr/share/java",
+        "hasUnknownVersions": false,
+        "path": "***:443aa86cda2d0181cd687f665727b700eebdb0ff/usr/share/java"
+      }
+    ]
+  }

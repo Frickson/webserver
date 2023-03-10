@@ -13,6 +13,7 @@ phases:
     commands:
       - echo "in the install phase"
       - npm install -g snyk
+      - sudo apt-get install jq
     finally:
       - echo This always runs even if the login command fails   
   pre_build:
