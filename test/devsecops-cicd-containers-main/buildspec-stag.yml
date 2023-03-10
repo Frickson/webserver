@@ -1,0 +1,37 @@
+#  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: MIT-0
+version: 0.2
+
+env:
+  parameter-store:
+    GITHUB_TOKEN: "GITHUB_TOKEN"
+    # DOCKER_PASSWORD: "DOCKER_PASSWORD"
+    # DOCKER_USERNAME: "DOCKER_USERNAME"
+    # AWS_ACCOUNT_ID: "acc-id"
+
+phases:
+  # install:
+  #   commands:
+  #     - echo "in the install phase"
+  #     - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
+  #     - chmod +x ./kubectl
+  #   finally:
+  #     - echo "This always runs even if the login command fails"     
+  pre_build:
+    commands:
+      - git clone https://nec-msbu-devops:${GITHUB_TOKEN}github.com/nec-msbu-devops/chatbot.git
+  build:
+    commands:
+      - cd $CODEBUILD_SRC_DIR
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  post_build:
+    commands:
+      - echo "inside post_buil .. deploying build"
+      - cd chatbot/Kubernetes-YAML
+      - aws eks update-kubeconfig --name $EKS_STAG_CLUSTER_NAME
+      - kubectl apply -f webserver.yaml
+      # - kubectl patch deployment wordpress-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"build\":\"prod-123456\"}}}}}}"
+      # - printf '[{"name":"prod-deployment","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
+artifacts:
+  type: zip
+  files: '**/*'
