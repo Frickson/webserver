@@ -1,6 +1,12 @@
 #  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 ##  SPDX-License-Identifier: MIT-0
 version: 0.2
+env:
+  parameter-store:
+    IMAGE_REPO_NAME: "IMAGE_REPO_NAME"
+    DOCKER_PASSWORD: "DOCKER_PASSWORD"
+    DOCKER_USERNAME: "DOCKER_USERNAME"
+    AWS_ACCOUNT_ID: "acc-id"
 phases:
   install:
     commands:

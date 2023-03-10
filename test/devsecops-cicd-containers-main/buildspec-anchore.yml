@@ -9,13 +9,13 @@ env:
     DOCKER_USERNAME: "DOCKER_USERNAME"
     AWS_ACCOUNT_ID: "acc-id"
 phases:
-  install:
-    commands:
-      - echo "in the install phase"
-      - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
-      - chmod +x ./kubectl
-    finally:
-      - echo This always runs even if the login command fails    
+  # install:
+  #   commands:
+  #     - echo "in the install phase"
+  #     - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
+  #     - chmod +x ./kubectl
+  #   finally:
+  #     - echo This always runs even if the login command fails    
   pre_build:
     commands:
       - echo "Logging in to Docker Hub"
