@@ -43,7 +43,7 @@ phases:
         \"build_id\": env.CODEBUILD_BUILD_ID, \
         \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
         \"report\": . }" snyk-results.json > payload.json
-      - cat snyk-results.json
+      - cat payload.json
       - echo ""
       # - |
       #   if (grep -E 'high|critical' payload.json); then 
