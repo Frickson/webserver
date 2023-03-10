@@ -35,14 +35,15 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   post_build:
     commands:
-      - tail -5 snyk-results.json
-      - |
-        jq "{ \"messageType\": \"CodeScanReport\", \"reportType\": \"SNYK\", \
-        \"createdAt\": $(date +\"%Y-%m-%dT%H:%M:%S.%3NZ\"), \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \
-        \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \
-        \"build_id\": env.CODEBUILD_BUILD_ID, \
-        \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
-        \"report\": . }" snyk-results.json > payload.json
+      - echo "nothing"
+      # - tail -5 snyk-results.json
+      # - |
+      #   jq "{ \"messageType\": \"CodeScanReport\", \"reportType\": \"SNYK\", \
+      #   \"createdAt\": $(date +\"%Y-%m-%dT%H:%M:%S.%3NZ\"), \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \
+      #   \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \
+      #   \"build_id\": env.CODEBUILD_BUILD_ID, \
+      #   \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
+      #   \"report\": . }" snyk-results.json > payload.json
       # - echo ""
       # - |
       #   if (grep -E 'high|critical' payload.json); then 
