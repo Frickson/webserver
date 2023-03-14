@@ -2,13 +2,13 @@
 #  SPDX-License-Identifier: MIT-0
 version: 0.2
 phases:
-  install:
-    commands:
-      - echo "in the install phase"
-      - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
-      - chmod +x ./kubectl
-    finally:
-      - echo This always runs even if the login command fails     
+  # install:
+  #   commands:
+  #     # - echo "in the install phase"
+  #     # - curl -sS -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.6/2023-01-30/bin/darwin/amd64/kubectl
+  #     # - chmod +x ./kubectl
+  #   finally:
+  #     - echo This always runs even if the login command fails     
   pre_build:
     commands:
       - echo "stage pre_build completed"
@@ -25,7 +25,7 @@ phases:
             echo "ECR scan failed";
             exit 1;
           fi
-          stat=$(aws ecr describe-image-scan-findings --repository-name eks-container-repo --image-id imageTag=latest | jq -r '.imageScanStatus.status');
+          stat=$(aws ecr describe-image-scan-findings --repository-name my-image --image-id imageTag=latest | jq -r '.imageScanStatus.status');
           sleep 5;
         done
       - aws ecr describe-image-scan-findings --repository-name eks-container-repo --image-id imageTag=latest > ecr_scan_result.json
