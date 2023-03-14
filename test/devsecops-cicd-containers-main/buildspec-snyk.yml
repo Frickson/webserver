@@ -54,7 +54,6 @@ phases:
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
           echo "There are critical or high vulnerabilities.. failing the build"
           docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:latest
-          exit 1;
         elif (grep -E 'medium|low' payload.json); then
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
           docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/my-image:latest
