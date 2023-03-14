@@ -47,11 +47,11 @@ phases:
       - echo ""
       - |
         if (grep -E 'high|critical' payload.json); then 
-          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json;
+          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json
           echo "There are critical or high vulnerabilities.. failing the build"
           exit 1;
         elif (grep -E 'medium|low' payload.json); then
-          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json;
+          aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json snyk-results.json
         fi
       - printf '[{"name":"hello-k8s","imageUri":"%s"}]' testing:$TAG > build.json
 artifacts:
