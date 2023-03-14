@@ -26,8 +26,8 @@ phases:
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
-      - ls
-      - cd test/devsecops-cicd-containers-main
+      # - ls
+      # - cd test/devsecops-cicd-containers-main
       # - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile-wp.dockerfile
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey
