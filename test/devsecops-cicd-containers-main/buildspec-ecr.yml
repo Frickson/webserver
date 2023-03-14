@@ -25,10 +25,10 @@ phases:
             echo "ECR scan failed";
             exit 1;
           fi
-          stat=$(aws ecr describe-image-scan-findings --repository-name my-image --image-id imageDigest=sha256:36c268a96ac0af8c35cf367f6a1b2bf339cae92ea0862a99889651f7147ec4dc | jq -r '.imageScanStatus.status');
+          stat=$(aws ecr describe-image-scan-findings --repository-name my-image --image-id imageDigest=sha256:36c268a96ac0af8c35cf367f6a1b2bf339cae92ea0862a99889651f7147ec4dc imageTag=latest | jq -r '.imageScanStatus.status');
           sleep 5;
         done
-      - aws ecr describe-image-scan-findings --repository-name eks-container-repo --image-id imageDigest=sha256:36c268a96ac0af8c35cf367f6a1b2bf339cae92ea0862a99889651f7147ec4dc > ecr_scan_result.json
+      - aws ecr describe-image-scan-findings --repository-name eks-container-repo --image-id imageDigest=sha256:36c268a96ac0af8c35cf367f6a1b2bf339cae92ea0862a99889651f7147ec4dc imageTag=latest > ecr_scan_result.json
   post_build:
     commands:
       - |
