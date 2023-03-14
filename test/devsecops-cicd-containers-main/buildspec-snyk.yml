@@ -28,13 +28,13 @@ phases:
       - cd $CODEBUILD_SRC_DIR
       - ls
       - cd test/devsecops-cicd-containers-main
-      - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile-wp.dockerfile
+      # - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile-wp.dockerfile
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey
       ## To scan the container image
-      - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=dockerfile-wp.dockerfile --json --exclude-base-image-vulns --severity-threshold=high > snyk-results.json
-      # - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
+      # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=dockerfile-wp.dockerfile --json --exclude-base-image-vulns --severity-threshold=high > snyk-results.json
+      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:wp
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
