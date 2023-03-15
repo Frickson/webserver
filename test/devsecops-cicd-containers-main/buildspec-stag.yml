@@ -5,6 +5,7 @@ version: 0.2
 env:
   parameter-store:
     GITHUB_TOKEN: "GITHUB_TOKEN"
+    EKS_STAG_CLUSTER_NAME: "EKS_STAG_CLUSTER_NAME"
     # DOCKER_PASSWORD: "DOCKER_PASSWORD"
     # DOCKER_USERNAME: "DOCKER_USERNAME"
     # AWS_ACCOUNT_ID: "acc-id"
@@ -19,7 +20,7 @@ phases:
   #     - echo "This always runs even if the login command fails"     
   pre_build:
     commands:
-      - git clone https://nec-msbu-devops:${GITHUB_TOKEN}github.com/nec-msbu-devops/chatbot.git
+      - git clone https://nec-msbu-devops:${GITHUB_TOKEN}@github.com/nec-msbu-devops/chatbot.git
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR
