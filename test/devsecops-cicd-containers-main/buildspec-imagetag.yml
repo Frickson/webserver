@@ -1,0 +1,16 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo "Setting CodeCommit Credentials"
+  build:
+    commands:
+      - MANIFEST=$(aws ecr batch-get-image --repository-name my-image --image-ids imageTag=latest --output json | jq --raw-output --join-output '.images[0].imageManifest')
+      - aws ecr put-image --repository-name my-image --image-tag 2017.03 --image-manifest "$MANIFEST"
+  post_build:
+    commands:
+      - aws ecr describe-images --repository-name my-image
+artifacts:
+  type: zip
+  files: '**/*'
+
