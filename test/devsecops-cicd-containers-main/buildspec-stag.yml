@@ -29,7 +29,7 @@ phases:
     commands:
       - echo "inside post_buil .. deploying build"
       - cd chatbot/chatbot/Kubernetes-YAML
-      - aws eks update-kubeconfig --name kx-eks-stage --region ap-southeast-1 --role-arn $CODEBUILD_BUILD_ARN      
+      - aws eks update-kubeconfig --name kx-eks-stage --region ap-southeast-1       
       - kubectl config current-context
       - aws sts get-caller-identity
       - ls
