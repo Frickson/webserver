@@ -20,7 +20,7 @@ phases:
   #     - echo "This always runs even if the login command fails"     
   pre_build:
     commands:
-      - git clone https://nec-msbu-devops:${GITHUB_TOKEN}@github.com/nec-msbu-devops/chatbot.git
+      - git clone https://nec-msbu-devops:$GITHUB_TOKEN@github.com/nec-msbu-devops/chatbot.git
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR
