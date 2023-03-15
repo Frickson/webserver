@@ -29,9 +29,10 @@ phases:
     commands:
       - echo "inside post_buil .. deploying build"
       - cd chatbot/chatbot/Kubernetes-YAML
-      - aws eks update-kubeconfig --name $EKS_STAG_CLUSTER_NAME
+      - aws eks update-kubeconfig --name kx-eks-stage
       - kubectl config current-context
-      - kubectl apply -f webserver.yaml
+      - ls
+      # - kubectl apply -f webserver.yaml
       # - kubectl patch deployment wordpress-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"build\":\"prod-123456\"}}}}}}"
       # - printf '[{"name":"prod-deployment","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
 artifacts:
