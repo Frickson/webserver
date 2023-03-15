@@ -8,7 +8,7 @@ env:
     DOCKER_USERNAME: "DOCKER_USERNAME"
     AWS_ACCOUNT_ID: "acc-id"
     SnykApiKey: "SnykApiKey"
-    SnykApiKey-2: "SnykApiKey-2"
+    SnykApiKey2: "SnykApiKey2"
 phases:
   install:
     commands:
@@ -28,7 +28,7 @@ phases:
       # - cd test/devsecops-cicd-containers-main
       # - docker build . -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile-wp.dockerfile
       # Snyk Auth using API token
-      - snyk config set api=$SnykApiKey-2
+      - snyk config set api=$SnykApiKey2
       ## To scan the container image
       # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=dockerfile-wp.dockerfile --json --exclude-base-image-vulns --severity-threshold=high > snyk-results.json
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
