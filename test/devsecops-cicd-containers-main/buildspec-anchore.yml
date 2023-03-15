@@ -33,7 +33,7 @@ phases:
         \"report\": . }" anchore-reports/*-vuln.json > payload.json
       - echo ""
       - aws s3api put-object --bucket kx-s3bucket --key dir1/payload.json --body payload.json
-      - cat payload.json
+      - aws s3api put-object --bucket kx-s3bucket --key dir1/anchore-reports/*-vuln.json --body anchore-reports/*-vuln.json
       - |
         if (grep -E 'High|Critical' payload.json); then 
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json anchore-reports/*-vuln.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
