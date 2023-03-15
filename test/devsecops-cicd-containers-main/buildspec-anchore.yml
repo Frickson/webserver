@@ -31,6 +31,7 @@ phases:
         \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
         \"report\": . }" anchore-reports/*-vuln.json > payload.json
       - echo ""
+      - cat anchore-reports/*-vuln.json
       - |
         if (grep -E 'High|Critical' payload.json); then 
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json anchore-reports/*-vuln.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
