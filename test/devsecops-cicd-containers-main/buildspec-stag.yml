@@ -21,6 +21,7 @@ phases:
   pre_build:
     commands:
       - git clone https://nec-msbu-devops:$GITHUB_TOKEN@github.com/nec-msbu-devops/chatbot.git
+      - export KUBECONFIG=$HOME/.kube/config
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR
