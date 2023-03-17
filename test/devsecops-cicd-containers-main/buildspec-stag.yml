@@ -36,7 +36,7 @@ phases:
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-      - aws eks update-kubeconfig --name kx-eks-stage --region ap-southeast-1  
+      - aws eks update-kubeconfig --name kx-eks-stage --region ap-southeast-1 --role-arn arn:aws:iam::925016504071:role/EksCodeBuildKubectlRole
       - kubectl config current-context
       - aws sts get-caller-identity
       - kubectl apply -f webserver.yaml
