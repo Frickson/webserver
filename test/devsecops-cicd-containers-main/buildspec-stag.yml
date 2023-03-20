@@ -39,6 +39,7 @@ phases:
       - aws eks update-kubeconfig --name kx-eks-stage 
       - kubectl config current-context
       - aws sts get-caller-identity
+      - kubectl create ns sit
       - kubectl apply -f webserver.yaml
 artifacts:     
   type: zip
