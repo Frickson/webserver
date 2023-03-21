@@ -11,6 +11,7 @@ phases:
   install:
     commands:
       - echo "install phase....."
+      - echo "$OwaspZapURL, $OwaspZapApiKey, $ApplicationURL"
   pre_build:
     commands:
       - scanid=$(curl "$OwaspZapURL/JSON/ascan/action/scan/?apikey=$OwaspZapApiKey&recurse=true&inScopeOnly=&scanPolicyName=&method=&postData=&contextId=&url=$ApplicationURL" | jq -r '.scan')
