@@ -31,6 +31,7 @@ phases:
       - snyk config set api=$SnykApiKey2
       ## To scan the container image
       # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=dockerfile-wp.dockerfile --json --exclude-base-image-vulns --severity-threshold=high > snyk-results.json
+      - echo "$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"

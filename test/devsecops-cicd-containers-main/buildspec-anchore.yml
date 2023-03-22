@@ -17,7 +17,6 @@ phases:
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
-      - echo "$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - curl -s https://ci-tools.anchore.io/inline_scan-v0.10.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
