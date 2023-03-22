@@ -46,7 +46,6 @@ phases:
         if (grep -E 'HIGH|CRITICAL' ecr_scan_result.json); then 
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json ecr_scan_result.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
           echo "There are critical or high vulnerabilities.. failing the build"
-          echo "exit 1";
         elif (grep -E 'MEDIUM' ecr_scan_result.json); then
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json ecr_scan_result.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
         fi
