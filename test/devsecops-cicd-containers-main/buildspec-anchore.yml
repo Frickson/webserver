@@ -17,10 +17,10 @@ phases:
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
-      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - curl -s https://ci-tools.anchore.io/inline_scan-v0.10.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
+      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_BUILD_ID .
+      - curl -s https://ci-tools.anchore.io/inline_scan-v0.10.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_BUILD_ID
+      - TAG="$CODEBUILD_BUILD_ID"
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_BUILD_ID ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   post_build:
     commands:
@@ -29,7 +29,7 @@ phases:
         \"createdAt\": $(date +\"%Y-%m-%dT%H:%M:%S.%3NZ\"), \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \
         \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \
         \"build_id\": env.CODEBUILD_BUILD_ID, \
-        \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
+        \"source_commitid\": env.CODEBUILD_BUILD_ID, \
         \"report\": . }" anchore-reports/*-vuln.json > payload.json
       - echo ""
       - aws s3api put-object --bucket kx-s3bucket --key dir1/payload.json --body payload.json
