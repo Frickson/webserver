@@ -25,7 +25,7 @@ phases:
       - echo "stage pre_build completed"
   build:
     commands:
-      - ori=$(aws ecr describe-images --repository-name my-image --query "sort_by(imageDetails,& imagePushedAt)[*]")
+      - ori=$(aws ecr describe-images --repository-name my-image --query "sort_by(imageDetails,& imagePushedAt)[*]" | jq --raw-output --join-output '[0].imageTags')
       # - test=$(aws ecr describe-images --repository-name my-image --query "sort_by(imageDetails,& imagePushedAt)[*]" | jq -r .imageTags)
       - echo "$ori"
       # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
