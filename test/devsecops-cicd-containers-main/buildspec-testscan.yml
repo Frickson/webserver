@@ -10,13 +10,13 @@ env:
     SnykApiKey: "SnykApiKey"
     SnykApiKey2: "SnykApiKey2"
 phases:
-  install:
-    commands:
-      - echo "in the install phase"
-      - npm install -g snyk
-      - jq --version
-    finally:
-      - echo This always runs even if the login command fails   
+  # install:
+  #   commands:
+  #     - echo "in the install phase"
+  #     - npm install -g snyk
+  #     - jq --version
+  #   finally:
+  #     - echo This always runs even if the login command fails   
   pre_build:
     commands:
       - set
