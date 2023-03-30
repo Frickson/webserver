@@ -8,6 +8,7 @@ env:
 phases:
   pre_build:
     commands:
+      - set
       - aws configure set cli-binary-format raw-in-base64-out
       - echo "Logging in to Docker Hub"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
