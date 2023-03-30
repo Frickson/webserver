@@ -27,7 +27,7 @@ phases:
     commands:
       - ori=$(aws ecr describe-images --repository-name my-image --query "sort_by(imageDetails,& imagePushedAt)[*]")
       # - test=$(aws ecr describe-images --repository-name my-image --query "sort_by(imageDetails,& imagePushedAt)[*]" | jq -r .imageTags)
-      - set
+      - echo "$ori"
       # - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
       # - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
       # - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
