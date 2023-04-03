@@ -1,16 +1,13 @@
-FROM wordpress:5.5-apache
-
+FROM ubuntu:latest
 # APT Update/Upgrade, then install packages we need
-RUN apt update && \
-    apt upgrade -y && \
-    apt autoremove && \
-    apt install -y \
-    wget 
+RUN apt-get update \
+    apt-get install -y curl \
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
+    apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+    apt-get update \
+    apt-get install -y terraform 
 
 #ADD wp-config.php /var/www/html/wp-config.php
 
 # Install WP-CLI
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-    php wp-cli.phar --info&& \
-    chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp
+

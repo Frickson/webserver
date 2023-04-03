@@ -8,18 +8,15 @@ env:
 phases:
   pre_build:
     commands:
-      - set
       - aws configure set cli-binary-format raw-in-base64-out
       - echo "Logging in to Docker Hub"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker version
       - echo "stage pre_build completed"
   build:
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker images
       - curl -s https://ci-tools.anchore.io/inline_scan-v0.10.0 | bash -s -- -r $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
@@ -34,8 +31,8 @@ phases:
         \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
         \"report\": . }" anchore-reports/*-vuln.json > payload.json
       - echo ""
-      - aws s3api put-object --bucket kx-s3bucket --key dir1/payload.json --body payload.json
-      - aws s3api put-object --bucket kx-s3bucket --key dir1/anchore-reports/*-vuln.json --body anchore-reports/*-vuln.json
+      # - aws s3api put-object --bucket kx-s3bucket --key dir1/payload.json --body payload.json
+      # - aws s3api put-object --bucket kx-s3bucket --key dir1/anchore-reports/*-vuln.json --body anchore-reports/*-vuln.json
       - |
         if (grep -E 'High|Critical' payload.json); then 
           aws lambda invoke --function-name ImpToSecurityHubEKS --payload file://payload.json anchore-reports/*-vuln.json && echo "LAMBDA_SUCCEDED" || echo "LAMBDA_FAILED";
