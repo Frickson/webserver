@@ -14,6 +14,7 @@ phases:
       - echo "stage pre_build completed"
   build:
     commands:
+      - ls
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
