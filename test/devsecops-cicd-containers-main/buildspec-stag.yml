@@ -20,6 +20,7 @@ phases:
   #     - echo "This always runs even if the login command fails"     
   pre_build:
     commands:
+      - aws sts get-caller-identity
       - git clone https://nec-msbu-devops:$GITHUB_TOKEN@github.com/nec-msbu-devops/chatbot.git
       - export KUBECONFIG=$HOME/.kube/config
   build:

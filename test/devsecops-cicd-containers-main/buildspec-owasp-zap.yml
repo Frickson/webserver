@@ -91,3 +91,16 @@ artifacts:
 # artifacts:
 #   type: zip
 #   files: '**/*'
+
+
+- name: PMA_HOST
+          value: "database-1.c8qhkqsk6pgj.ap-southeast-1.rds.amazonaws.com"
+        - name: PMA_PORT
+          value: "3306"
+        - name: UPLOAD_LIMIT
+          value: "1G"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_PASSWORD
+              name: db-env
