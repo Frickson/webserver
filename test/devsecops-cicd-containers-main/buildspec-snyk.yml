@@ -31,6 +31,7 @@ phases:
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey2
       - cd nec.msbu.chatbot.source/webserver
+      - ls
       ## To scan the container image
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
