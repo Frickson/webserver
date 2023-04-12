@@ -34,10 +34,10 @@ phases:
       - cd $project_path
       - ls
       ## To scan the container image
-      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - snyk container test $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
-      - TAG="$CODEBUILD_RESOLVED_SOURCE_VERSION"
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
+      - docker build -t tmp:latest .
+      - snyk container test tmp:latest --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
+      - TAG="$CODEBUILD_BUILD_ID"
+      - docker tag tmp:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   post_build:
     commands:
