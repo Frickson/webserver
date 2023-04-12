@@ -33,7 +33,7 @@ phases:
       - aws eks update-kubeconfig --name kx-test 
       - kubectl config current-context
       - aws sts get-caller-identity
-      - kubectl apply -f $filename
+      - kubectl apply -f ${filename}
 artifacts:     
   type: zip
   files: '**/*'
