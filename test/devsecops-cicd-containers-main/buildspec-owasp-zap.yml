@@ -32,6 +32,7 @@ phases:
     commands: 
       - curl "$OwaspZapURL/OTHER/core/other/jsonreport/?apikey=$OwaspZapApiKey" | jq . > zap-scan-results.json
       - echo "build stage completed"
+      - set
   post_build:
     commands:
       - | 
