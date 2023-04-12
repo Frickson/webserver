@@ -26,10 +26,10 @@ phases:
             echo "ECR scan failed";
             exit 1;
           fi
-          stat=$(aws ecr describe-image-scan-findings --repository-name my-image --image-id imageTag=latest | jq -r '.imageScanStatus.status');
+          stat=$(aws ecr describe-image-scan-findings --repository-name $IMAGE_REPO_NAME --image-id imageTag=latest | jq -r '.imageScanStatus.status');
           sleep 5;
         done
-      - aws ecr describe-image-scan-findings --repository-name my-image --image-id imageTag=latest > ecr_scan_result.json
+      - aws ecr describe-image-scan-findings --repository-name $IMAGE_REPO_NAME --image-id imageTag=latest > ecr_scan_result.json
   post_build:
     commands:
       - |
