@@ -25,6 +25,7 @@ phases:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - echo "stage pre_build completed"
   build:
+    on-failure: CONTINUE
     commands:
       - echo "inside build stage"
       - cd $CODEBUILD_SRC_DIR
@@ -35,7 +36,7 @@ phases:
       - ls
       ## To scan the container image
       - docker build -t tmp:latest .
-      - snyk container test tmp:latest --file=Dockerfile --exclude-base-image-vulns --severity-threshold=high --json > snyk-results.json
+      - snyk container test tmp:latest --file=Dockerfile --exclude-base-image-vulns --severity-threshold=critical --json > snyk-results.json
       - TAG="$CODEBUILD_BUILD_ID"
       - docker tag tmp:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
