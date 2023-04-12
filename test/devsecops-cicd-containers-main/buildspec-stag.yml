@@ -6,7 +6,7 @@ env:
   parameter-store:
     GITHUB_TOKEN: "GITHUB_TOKEN"
     EKS_STAG_CLUSTER_NAME: "EKS_STAG_CLUSTER_NAME"
-    IMAGE: "IMAGE_REPO_NAME"
+
 
 phases:
   pre_build:
@@ -14,7 +14,7 @@ phases:
       - aws sts get-caller-identity
       - git clone https://nec-msbu-devops:$GITHUB_TOKEN@github.com/nec-msbu-devops/chatbot.git
       - export KUBECONFIG=$HOME/.kube/config
-      - filename="${IMAGE}.yaml"
+      - filename="${IMAGE_REPO_NAME}.yaml"
       - echo "$filename"
   build:
     commands:
