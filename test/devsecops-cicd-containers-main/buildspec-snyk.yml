@@ -9,6 +9,7 @@ env:
     AWS_ACCOUNT_ID: "acc-id"
     SnykApiKey: "SnykApiKey"
     SnykApiKey2: "SnykApiKey2"
+    project_path: "project_path"
 phases:
   install:
     commands:
@@ -30,7 +31,7 @@ phases:
       - ls
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey2
-      - cd nec.msbu.chatbot.source/webserver
+      - cd $project_path
       - ls
       ## To scan the container image
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
