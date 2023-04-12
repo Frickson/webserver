@@ -33,6 +33,7 @@ phases:
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey2
       - cd $project_path
+      - echo "this is ${project_path}, $project_path"
       - ls
       ## To scan the container image
       - docker build -t tmp:latest .
