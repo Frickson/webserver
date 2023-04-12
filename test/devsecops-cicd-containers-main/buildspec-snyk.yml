@@ -3,13 +3,11 @@
 version: 0.2
 env:
   parameter-store:
-    IMAGE_REPO_NAME: "IMAGE_REPO_NAME"
     DOCKER_PASSWORD: "DOCKER_PASSWORD"
     DOCKER_USERNAME: "DOCKER_USERNAME"
     AWS_ACCOUNT_ID: "acc-id"
     SnykApiKey: "SnykApiKey"
     SnykApiKey2: "SnykApiKey2"
-    project_path: "project_path"
 phases:
   install:
     commands:
@@ -33,7 +31,6 @@ phases:
       # Snyk Auth using API token
       - snyk config set api=$SnykApiKey2
       - cd $project_path
-      - echo "this is ${project_path}, $project_path"
       - ls
       ## To scan the container image
       - docker build -t tmp:latest .
