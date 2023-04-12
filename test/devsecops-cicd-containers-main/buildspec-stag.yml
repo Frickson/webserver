@@ -6,6 +6,7 @@ env:
   parameter-store:
     GITHUB_TOKEN: "GITHUB_TOKEN"
     EKS_STAG_CLUSTER_NAME: "EKS_STAG_CLUSTER_NAME"
+    IMAGE: "IMAGE_REPO_NAME"
 
 phases:
   pre_build:
@@ -13,6 +14,8 @@ phases:
       - aws sts get-caller-identity
       - git clone https://nec-msbu-devops:$GITHUB_TOKEN@github.com/nec-msbu-devops/chatbot.git
       - export KUBECONFIG=$HOME/.kube/config
+      - filename = "{$IMAGE}.yaml"
+      - echo "$filename"
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR
@@ -30,40 +33,8 @@ phases:
       - aws eks update-kubeconfig --name kx-eks-stage 
       - kubectl config current-context
       - aws sts get-caller-identity
-      - kubectl apply -f webserver.yaml
+      - kubectl apply -f $filename
 artifacts:     
   type: zip
   files: '**/*'
 
-
-
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: efs-claim
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: efs-sc
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: efs-app
-spec:
-  containers:
-    - name: app
-      image: centos
-      command: ["/bin/sh"]
-      args: ["-c", "while true; do echo $(date -u) >> /data/out; sleep 5; done"]
-      volumeMounts:
-        - name: persistent-storage
-          mountPath: /data
-  volumes:
-    - name: persistent-storage
-      persistentVolumeClaim:
-        claimName: efs-claim
